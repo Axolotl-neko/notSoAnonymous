@@ -1,13 +1,9 @@
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
-import java.rmi.NotBoundException;
 
-
-public class ChatClient extends UnicastRemoteObject implements ChatInterface  {
+public class ChatClient extends UnicastRemoteObject implements ChatInterface {
     private String name;
     private ChatInterface server;
 
@@ -17,12 +13,8 @@ public class ChatClient extends UnicastRemoteObject implements ChatInterface  {
 
     public void startChat() {
         try {
-
-
-            ChatInterface SServer = (ChatInterface) Naming.lookup("rmi://localhost:1098/Oserver");
-          
-           
-            SServer.registerClient(this);
+            server = (ChatInterface) Naming.lookup("//localhost/ChatServer");
+            server.registerClient(this);
 
             Scanner scanner = new Scanner(System.in);
 
@@ -34,27 +26,28 @@ public class ChatClient extends UnicastRemoteObject implements ChatInterface  {
                     System.exit(0);
                 }
 
-                sendMessage("[" + name + "]: " + message);
+                ChatMessage chatMessage = new ChatMessage();
+                chatMessage.setSender(name);
+                chatMessage.setContent("[" + name + "]: " + message);
+
+                server.sendMessage(chatMessage);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
-
-
     @Override
-    public void sendMessage(String message) throws RemoteException {
-        System.out.println(message);
+    public void sendMessage(ChatMessage message) throws RemoteException {
+        System.out.println(message.getContent());
     }
 
     @Override
-    public void registerClient(ChatInterface client) {
-        // This method is not used in the client
+    public void registerClient(ChatInterface client) throws RemoteException {
+        // Cette méthode n'est pas utilisée dans le client
     }
 
-    public static void main(String[] args) throws NotBoundException ,RemoteException{
+    public static void main(String[] args) {
         try {
             String name = args[0];
             ChatClient client = new ChatClient(name);

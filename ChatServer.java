@@ -1,15 +1,14 @@
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatServer extends UnicastRemoteObject implements ChatInterface
- {
+public class ChatServer extends UnicastRemoteObject implements ChatInterface {
+    private List<ChatInterface> clients;
 
-    private static List<ChatInterface> clients = new ArrayList<>();
-
-
-    protected ChatServer() throws RemoteException {
+    public ChatServer() throws RemoteException {
+        clients = new ArrayList<>();
     }
 
     @Override
@@ -19,27 +18,30 @@ public class ChatServer extends UnicastRemoteObject implements ChatInterface
     }
 
     @Override
-
-    public void sendMessage(String message) throws RemoteException {
-        System.out.println("Received message: " + message);
+    public void sendMessage(ChatMessage message) throws RemoteException {
+        System.out.println(message.getContent());
         broadcastMessage(message);
     }
 
-
-
-
-    private void broadcastMessage(String message) {
-        // Broadcast the message to all connected clients
+    private void broadcastMessage(ChatMessage message) {
         for (ChatInterface client : clients) {
             try {
                 client.sendMessage(message);
             } catch (RemoteException e) {
-                // Handle RemoteException if a client is unreachable
                 System.err.println("Error sending message to a client:");
                 e.printStackTrace();
             }
         }
     }
 
-
+    public static void main(String[] args) {
+        try {
+            java.rmi.registry.LocateRegistry.createRegistry(1099);
+            ChatServer server = new ChatServer();
+            Naming.rebind("//localhost/ChatServer", server);
+            System.out.println("Server is ready.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

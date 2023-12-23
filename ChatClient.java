@@ -7,15 +7,18 @@ public class ChatClient extends UnicastRemoteObject implements ChatInterface {
     private String name;
     private ChatInterface server;
 
-    protected ChatClient(String name) throws RemoteException {
+    public ChatClient(String name) throws RemoteException {
         this.name = name;
+        try {
+            server = (ChatInterface) Naming.lookup("//localhost/ChatServer");
+            server.registerClient(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void startChat() {
         try {
-            server = (ChatInterface) Naming.lookup("//localhost/ChatServer");
-            server.registerClient(this);
-
             Scanner scanner = new Scanner(System.in);
 
             while (true) {

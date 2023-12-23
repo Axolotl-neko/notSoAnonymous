@@ -76,7 +76,7 @@ prenom.setPreferredSize(new Dimension(400,40));
 //creating the labels for j texts
 
 JLabel noml = new JLabel();
-noml.setText("nom :");
+noml.setText("username :");
 noml.setForeground( Color.BLACK);
 noml.setFont( new Font ("Hacker",Font.PLAIN,20));
 

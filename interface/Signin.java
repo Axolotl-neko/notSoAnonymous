@@ -4,26 +4,24 @@ import java.awt.event.ActionListener;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.Border;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
 
-public class Launcher extends JFrame implements ActionListener, MouseListener{
+
+public class Signin extends JFrame implements ActionListener{
 
 //declaration du button
 
-JButton login;
+JButton signin;
 
 
 //declaration de jtext
 
 JTextField nom;
 JTextField prenom;
+JTextField username;
+JTextField password;
 
-//declaration du label pour mouse listener 
 
-JLabel signIN;
-
-public Launcher(){
+public Signin(){
  
 
 //declaration des pannels du border layout
@@ -45,17 +43,17 @@ centreP.setBackground(new Color (87, 135, 61));
 
 //seting size
 
-topP.setPreferredSize(new Dimension(400,300));
+topP.setPreferredSize(new Dimension(400,250));
 eastP.setPreferredSize(new Dimension(150,100));
 westP.setPreferredSize(new Dimension(150,100));
 
 
 // button login
 
-login = new JButton();
-login.setText("Login");
-login.addActionListener(this);
-login.setPreferredSize(new Dimension(400,40));
+signin = new JButton();
+signin.setText("Sign in");
+signin.addActionListener(this);
+signin.setPreferredSize(new Dimension(400,40));
 
 
 
@@ -63,27 +61,38 @@ login.setPreferredSize(new Dimension(400,40));
 
 nom = new JTextField();
 prenom = new JTextField();
+username = new JTextField();
+password = new JTextField();
 
 nom.setPreferredSize(new Dimension(400,40));
 prenom.setPreferredSize(new Dimension(400,40));
+username.setPreferredSize(new Dimension(400,40));
+password.setPreferredSize(new Dimension(400,40));
+
 //creating the labels for j texts
 
 JLabel noml = new JLabel();
-noml.setText("Username :");
+noml.setText("Name :");
 noml.setForeground( Color.BLACK);
 noml.setFont( new Font ("Hacker",Font.PLAIN,20));
 
 JLabel prenoml = new JLabel();
 prenoml.setForeground( Color.BLACK);
-prenoml.setText("Password :");
+prenoml.setText("Family Name :");
 prenoml.setFont( new Font ("Hacker",Font.PLAIN,20));
 
 
-signIN = new JLabel();
-signIN.setForeground( Color.BLACK);
-signIN.setText("new ? sign in");
-signIN.setFont( new Font ("Hacker",Font.PLAIN,15));
-signIN.addMouseListener(this);
+JLabel usernamel = new JLabel();
+usernamel.setForeground( Color.BLACK);
+usernamel.setText("Username :");
+usernamel.setFont( new Font ("Hacker",Font.PLAIN,20));
+
+
+
+JLabel passwordl = new JLabel();
+passwordl.setForeground( Color.BLACK);
+passwordl.setText("Password :");
+passwordl.setFont( new Font ("Hacker",Font.PLAIN,20));
 
 //creating the panels for the text fields and the labels "containers"
 
@@ -98,14 +107,28 @@ prenomP.setLayout(new FlowLayout(FlowLayout.LEADING));
 nomP.add(noml);
 nomP.add(nom);
 
+JPanel usernameP = new JPanel();
+usernameP.setBackground(new Color (87, 135, 61));
+usernameP.setLayout(new FlowLayout(FlowLayout.LEADING));
+
+JPanel passwordP = new JPanel();
+passwordP.setBackground(new Color (87, 135, 61));
+passwordP.setLayout(new FlowLayout(FlowLayout.LEADING));
+
+
 JPanel loginP = new JPanel();
 loginP.setBackground(new Color (87, 135, 61));
 loginP.setLayout(new FlowLayout(FlowLayout.CENTER,20,20));
 
+passwordP.add(passwordl);
+passwordP.add(password);
+usernameP.add(usernamel);
+usernameP.add(username);
+
 prenomP.add(prenoml);
 prenomP.add(prenom);
-loginP.add(login);
-loginP.add(signIN);
+loginP.add(signin);
+
 
 
 
@@ -114,7 +137,7 @@ loginP.add(signIN);
 
 ImageIcon imageIcon = new ImageIcon(new ImageIcon("pngegg.png").getImage().getScaledInstance(200,200, Image.SCALE_DEFAULT));
 JLabel anon = new JLabel();
-anon.setText("Not really anonymous but at least we ain't lying ;)"); 
+anon.setText("Your privacy matters 100% N.S.A free "); 
 
 anon.setIcon(imageIcon);
 anon.setHorizontalTextPosition (JLabel.CENTER);//set text left center or right of image icon
@@ -132,13 +155,13 @@ topP.add(anon);
 
 // modifier le centre 
 
-centreP.setLayout(new GridLayout(3,1));
+centreP.setLayout(new GridLayout(5,1));
 
 centreP.add(nomP);
 centreP.add(prenomP);
+centreP.add(usernameP);
+centreP.add(passwordP);
 centreP.add(loginP);
-
-
 
 
 // construction du frame 
@@ -165,43 +188,7 @@ public void actionPerformed(ActionEvent e) {
 
 
 
-@Override
-public void mouseClicked(MouseEvent e) {
-    if(e.getSource()== signIN){
-        this.dispose();
-       new Signin();
-    }
-   
-}
 
-@Override
-public void mousePressed(MouseEvent e) {
-   
-}
-
-@Override
-public void mouseReleased(MouseEvent e) {
-    
-}
-
-@Override
-public void mouseEntered(MouseEvent e) {
-
-    if(e.getSource()== signIN){
-       
-        signIN.setForeground( Color.red);
-    }
-   
-}
-
-@Override
-public void mouseExited(MouseEvent e) {
-    if(e.getSource()== signIN){
-        signIN.setForeground( Color.black);
-    }
-   
-  
-}
 
 
 }

@@ -115,8 +115,8 @@ loginP.add(signIN);
 ImageIcon imageIcon = new ImageIcon(new ImageIcon("pngegg.png").getImage().getScaledInstance(200,200, Image.SCALE_DEFAULT));
 JLabel anon = new JLabel();
 anon.setText("Not really anonymous but at least we ain't lying ;)"); 
-
 anon.setIcon(imageIcon);
+anon.setBounds(0,10,600,400);
 anon.setHorizontalTextPosition (JLabel.CENTER);//set text left center or right of image icon
 anon.setVerticalTextPosition (JLabel.BOTTOM);//set TOP center or bottom
 anon.setForeground( Color.BLACK);
